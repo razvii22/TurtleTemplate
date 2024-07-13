@@ -1,0 +1,5 @@
+https://raw.githubusercontent.com/razvii22/TurtleTemplate/main/getFuel.lua
+https://raw.githubusercontent.com/razvii22/TurtleTemplate/main/setFloor.lua
+https://raw.githubusercontent.com/razvii22/TurtleTemplate/main/staircase.lua
+https://raw.githubusercontent.com/razvii22/TurtleTemplate/main/startup.lua
+https://raw.githubusercontent.com/razvii22/TurtleTemplate/main/vMiner.lua
