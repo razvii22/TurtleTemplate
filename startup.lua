@@ -10,7 +10,7 @@ local function reply(message,...)
         end
     end
     print(reply)
-    rednet.send(message[1],{...},message[3])
+    -- rednet.send(message[1],{...},message[3])
 end
 
 local commandVerbs = {
@@ -35,7 +35,7 @@ local function handleCommand(message)
     assert(type(message) == "table","Invalid message format")
     assert(type(message[2]) == "table","Invalid message format")
     assert(type(message[2].verb) == "string" and match(commandVerbs,message[2].verb),"Invalid command verb")
-
+    message[2].command = message[2].command or ""
     local verb = message[2].verb
     local command = {}
     for w in message[2].command:gmatch("%S+") do table.insert(command,w) end
@@ -50,7 +50,7 @@ local function handleCommand(message)
         local programName = assert(shell.resolveProgram(command[1]),"No such program.")
         local program = assert(loadfile(programName))
         local co = coroutine.create(function()
-            rednet.broadcast(program(table.unpack(command,2)),"Miner")
+            program(table.unpack(command,2))
         end)
         activeCoroutine = co
     elseif verb == "stop" then
@@ -86,7 +86,6 @@ local function manageCoroutine()
             elseif coroutine.status(activeCoroutine) == "dead" then
                 local label = os.getComputerLabel() or ("ID# "..os.getComputerID())
                 print("Turtle "..label.." has finished its task or the program quit.")
-                rednet.broadcast("Turtle "..label.." has finished its task or the program quit.","Miner")
                 activeCoroutine = nil
             end
         end
